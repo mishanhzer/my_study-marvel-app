@@ -25,11 +25,13 @@ class MarvelService {
 
     _transformChar = (char) => {
         return {
+            id: char.id,
             name: char.name,
             description: `${char.description ? (char.description.length > 225 ? char.description.slice(0, 224) : char.description) : 'Description is not found'}`,
             thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
             homepage: char.urls[0].url,
-            wiki: char.urls[1].url
+            wiki: char.urls[1].url,
+            comics: char.comics.items 
         }
     }
 }

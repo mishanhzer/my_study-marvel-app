@@ -27,6 +27,16 @@
             object-fit: cover;
         }
     }
+    &__basics_active {
+        display: grid;
+        grid-template-columns: 150px auto;
+        column-gap: 25px;
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+        }
+    }
     &__btns {
         margin-top: 35px;
         a:nth-child(2) {
