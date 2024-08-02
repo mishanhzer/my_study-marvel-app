@@ -35,6 +35,8 @@ class CharInfo extends Component {
         this.marvelService 
             .getCharacter(charId) 
             .then(this.onCharLoaded) 
+
+        this.foo.test = 0; // впишем в свойство, которого нет значение 0, чтобы вызвать ошибку
     }
 
     onCharLoaded = (char) => {
