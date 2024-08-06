@@ -1,5 +1,3 @@
-// Добавляем компонент - картинка ошибки
-
 import error from './error.png'
 
 const ErrorMessage = () => {
