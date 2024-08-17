@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../error/ErrorMessage'
@@ -59,20 +60,39 @@ class CharList extends Component {
             loading: false
         })
     }
+    
+    // Создаем пустой массив (туда будем помещать ссылки на элементы через рефы)
+    items = [];
+
+    // Создаем метод по установке рефа
+    setMyRef = (elem) => {
+        this.items.push(elem); // пушим ссылки на элементы в наш пустой массив
+    }
+
+    // Создаем метод, который будет менять классы у элементов (работа с массивом)
+    onFocusElem = (id) => { // аргумент id (это будет номер порядка элементов)
+        this.items.forEach(item => item.classList.remove('char__item_selected')); // перебираем массив и удаляем у всех элементов класс активности
+        this.items[id].classList.add('char__item_selected'); // добавляем класс активности нужному элементу
+    }
 
     renderItems(arr) {
-        const items =  arr.map((item) => {
-
-            let imgStyle = {'objectFit' : 'cover'};
+        const items = arr.map((item, i) => { // добавляем i (порядок наших элементов)
+            let imgStyle = {'objectFit': 'cover'};
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
-                imgStyle = {'objectFit' : 'unset'}; 
+                imgStyle = {'objectFit': 'unset'}; 
             }
-            
+
             return (
                 <li 
-                    className="char__item"
+                    tabIndex={0} // устанавливаем tabIndex
+                    ref={this.setMyRef} // устанавливаем реф (массив)
+                    className='char__item'
                     key={item.id}
-                    onClick={() => this.props.onCharSelected(item.id)}>
+                    onClick={() => { // !!! PS: в клике можно вызывать несколько функций, добавляя их в фигурные скобки 
+                            this.props.onCharSelected(item.id);
+                            this.onFocusElem(i); // подставляем в метод наш i (номер элемента при клике)
+                        }}
+                        > 
                         <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
                         <div className="char__name">{item.name}</div>
                 </li>
@@ -111,6 +131,10 @@ class CharList extends Component {
             </div>
         )
     }
+}
+
+CharList.propTypes = {
+    onCharSelected: PropTypes.func.isRequired
 }
 
 export default CharList;

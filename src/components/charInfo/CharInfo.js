@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types'; // импорт библиотеки propTypes (прежде установили npm пакеты)
 
 import MarvelService from '../services/MarvelService';
 import Spinner from '../spinner/Spinner'; 
@@ -6,6 +7,9 @@ import ErrorMessage from '../error/ErrorMessage';
 import Skeleton from  '../skeleton/Skeleton'; 
 
 import './charInfo.scss';
+
+// PS: в дальнейшем буду изучать typescript, поэтому мне эта фича не так важна
+// PropTypes. Теперь мы можем прописывать правила для проверки пропсов 
 
 class CharInfo extends Component {
     state = {
@@ -121,5 +125,11 @@ const View = ({char}) => {
         </>
     )
 }
+
+// У нас charId number
+CharInfo.propTypes = { // обращаемся к компоненту и задаем статическое свойство
+    charId: PropTypes.number // пропс charId записываем, то каким типом данный пропс должен быть
+}
+// если мы укажем charId: PropTypes.string (что не является строкой), то получим уведомление в консоли (что мы получили number, но ожидали string)
 
 export default CharInfo;

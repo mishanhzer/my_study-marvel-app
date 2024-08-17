@@ -15,7 +15,6 @@
         row-gap: 30px;
         &_load {
             display: flex;
-            // margin: 0 auto;
             justify-content: center;
             grid-template-columns: repeat(3, 200px);
             column-gap: 25px;
@@ -51,7 +50,7 @@
             object-fit: cover;
             transform: translate(-15px, -15px);
         }
-        &_selected {
+        &_selected { // наш класс активности
             box-shadow: 0 5px 20px $main-color;
             transform: translateY(-8px);
         }

@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
 import AppHeader from "../appHeader/AppHeader";
 import RandomChar from "../randomChar/RandomChar";
@@ -10,12 +10,12 @@ import decoration from '../../resources/img/vision.png';
 
 class App extends Component {
     state = {
-        selectedChar: null  
+        selectedChar: null
     }
 
     onCharSelected = (id) => {
         this.setState({
-            selectedChar: id
+            selectedChar: id,
         })
     }
 
@@ -29,7 +29,9 @@ class App extends Component {
                     </ErrorBoundary>
                     <div className="char__content">
                        <ErrorBoundary>
-                            <CharList onCharSelected={this.onCharSelected}/> 
+                            <CharList 
+                                onCharSelected={this.onCharSelected}
+                            /> 
                        </ErrorBoundary>
                         <ErrorBoundary>
                             <CharInfo charId={this.state.selectedChar}/>
