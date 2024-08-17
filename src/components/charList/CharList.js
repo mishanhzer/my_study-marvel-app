@@ -61,22 +61,19 @@ class CharList extends Component {
         })
     }
     
-    // Создаем пустой массив (туда будем помещать ссылки на элементы через рефы)
     items = [];
 
-    // Создаем метод по установке рефа
     setMyRef = (elem) => {
-        this.items.push(elem); // пушим ссылки на элементы в наш пустой массив
+        this.items.push(elem); 
     }
 
-    // Создаем метод, который будет менять классы у элементов (работа с массивом)
-    onFocusElem = (id) => { // аргумент id (это будет номер порядка элементов)
-        this.items.forEach(item => item.classList.remove('char__item_selected')); // перебираем массив и удаляем у всех элементов класс активности
-        this.items[id].classList.add('char__item_selected'); // добавляем класс активности нужному элементу
+    onFocusElem = (id) => { 
+        this.items.forEach(item => item.classList.remove('char__item_selected')); 
+        this.items[id].classList.add('char__item_selected'); 
     }
 
     renderItems(arr) {
-        const items = arr.map((item, i) => { // добавляем i (порядок наших элементов)
+        const items = arr.map((item, i) => { 
             let imgStyle = {'objectFit': 'cover'};
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
                 imgStyle = {'objectFit': 'unset'}; 
@@ -84,13 +81,13 @@ class CharList extends Component {
 
             return (
                 <li 
-                    tabIndex={0} // устанавливаем tabIndex
-                    ref={this.setMyRef} // устанавливаем реф (массив)
+                    tabIndex={0} 
+                    ref={this.setMyRef} 
                     className='char__item'
                     key={item.id}
-                    onClick={() => { // !!! PS: в клике можно вызывать несколько функций, добавляя их в фигурные скобки 
+                    onClick={() => { 
                             this.props.onCharSelected(item.id);
-                            this.onFocusElem(i); // подставляем в метод наш i (номер элемента при клике)
+                            this.onFocusElem(i); 
                         }}
                         > 
                         <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
