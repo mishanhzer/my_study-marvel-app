@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react"; 
 import {Helmet} from "react-helmet"; // импортируем Helmet
 
@@ -10,9 +11,9 @@ import CharForm from "../charForm/CharForm";
 import decoration from '../../resources/img/vision.png'; 
 
 const MainPage = () => { 
-    const [selectedChar, setChar] = useState(null); 
+    const [selectedChar, setChar] = useState<null | number>(null); 
 
-    const onCharSelected = (id) => {
+    const onCharSelected = (id: null | number) => {
        setChar(id);
     }
 
@@ -30,7 +31,7 @@ const MainPage = () => {
             </ErrorBoundary>
             <div className="char__content">
                 <ErrorBoundary>
-                    <CharList onCharSelected={onCharSelected} /> {/* Каждый раз когда мы нажимает на персонажа в CharList, вызывается метод onCharSelected и изменяет стейт компонента MainPage - т.е MainPage перерендеривается и перерендеривает свои дочерние компоненты */}
+                    <CharList onCharSelected={onCharSelected} /> 
                 </ErrorBoundary>
                 <div> 
                     <ErrorBoundary>

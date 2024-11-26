@@ -1,7 +1,10 @@
+import React from "react";
 import {Helmet} from "react-helmet";
 import './singleCharPage.scss';
 
-const SingleCharPage = ({data}) => { 
+import { CharPage } from "../../interfaces/interface";
+
+const SingleCharPage = ({data}: CharPage) => { 
     const {name, description, thumbnail} = data;
     
     return (

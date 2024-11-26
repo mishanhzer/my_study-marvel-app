@@ -1,16 +1,21 @@
+import React, { CSSProperties } from 'react';
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
-import useMarvelService from '../services/MarvelService';
+import useMarvelServiceTS from '../services/MarvelService';
 import setContent from '../../utils/setContent'; 
 
 import './charInfo.scss';
+import { IResponse } from '../interfaces/interface';
 
-const CharInfo = (props) => {
-    const [char, setChar] = useState(null);
-    console.log(char)
-    const {getCharacter, clearError, process, setProcess} = useMarvelService(); 
-    
+interface ICharInfoProps {
+    charId?: number | null | string
+}
+
+
+const CharInfo = (props: ICharInfoProps) => {
+    const [char, setChar] = useState<IResponse | null>();
+    const {getCharacter, clearError, process, setProcess} = useMarvelServiceTS(); 
+
     useEffect(() => {
         updateChar()
     }, [props.charId])
@@ -27,7 +32,7 @@ const CharInfo = (props) => {
             .then(() => setProcess('confirmed'))
     }
 
-    const onCharLoaded = (char) => {
+    const onCharLoaded = (char: IResponse) => {
         setChar(char);
     }
 
@@ -38,10 +43,10 @@ const CharInfo = (props) => {
     )
 }
 
-const View = ({data}) => { 
+const View = ({data}: any) => { 
     const {name, description, thumbnail, homepage, wiki, comics} = data;
 
-    let imgStyle = {'objectFit' : 'cover'};
+    let imgStyle:CSSProperties = {'objectFit' : 'cover'};
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
         imgStyle = {'objectFit' : 'contain'};
     }
@@ -81,10 +86,6 @@ const View = ({data}) => {
             </ul>
         </>
     )
-}
-
-CharInfo.propTypes = {
-    charId: PropTypes.number
 }
 
 export default CharInfo;

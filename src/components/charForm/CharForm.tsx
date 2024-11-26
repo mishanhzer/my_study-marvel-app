@@ -1,21 +1,22 @@
+import React from 'react';
 import { useState} from 'react';
 import {Link} from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage as FormikErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
-import useMarvelService from '../services/MarvelService';
+import useMarvelServiceTS from '../services/MarvelService';
 import ErrorMessage from '../error/ErrorMessage';
 
 import './charForm.scss';
+import { IResponse } from '../interfaces/interface';
 
-
-const setContent = (process, char) => {
+const setContent = (process: string, char: IResponse[]) => {
     switch(process) {
         case 'waiting':
             return false; 
         case 'loading': 
             return false; 
-        case 'confirmed':  // если процесс успешен, то возвращаем функционал
+        case 'confirmed': 
             return char.length > 0 ? 
             <div className='char__search-wrapper'>
                 <div className='char__search-success'>The is Visit {char[0].name} page?</div> 
@@ -38,14 +39,14 @@ const setContent = (process, char) => {
 }
 
 const CharForm = () => {
-    const [char, setChar] = useState(null); 
-    const {getCharacterByName, clearError, process, setProcess} = useMarvelService(); 
-    const onCharLoaded = (char) => {
-        console.log(char)
+    const [char, setChar] = useState<IResponse[]>([]); 
+    const {getCharacterByName, clearError, process, setProcess} = useMarvelServiceTS(); 
+
+    const onCharLoaded = (char: IResponse[])  => {
         setChar(char);
     }
 
-    const updateChar = (name) => { 
+    const updateChar = (name: string) => { 
         clearError();
         getCharacterByName(name) 
             .then(onCharLoaded) 
@@ -80,7 +81,7 @@ const CharForm = () => {
                         <button 
                             type='submit'
                             className="button button__main"
-                            disabled={process === 'loading' ? true : false} // делаем условный рендеринг для loading
+                            disabled={process === 'loading' ? true : false} 
                             > 
                             <div className="inner">FIND</div>
                         </button>

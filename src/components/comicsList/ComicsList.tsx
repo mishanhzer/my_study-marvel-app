@@ -1,14 +1,15 @@
+import React from 'react';
 import {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-import useMarvelService from '../services/MarvelService';
+import useMarvelServiceTS from '../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../error/ErrorMessage';
 
 import './comicsList.scss';
-import { string } from 'prop-types';
+import { TransformComics } from '../interfaces/interface';
 
-const setContent = (process, Component, newItemLoading) => {
+const setContent = (process: string, Component:React.FC, newItemLoading: boolean) => {
     switch(process) {
         case 'waiting': 
             return <Spinner/>; 
@@ -23,27 +24,26 @@ const setContent = (process, Component, newItemLoading) => {
     }
 }
 
-
 const ComicsList = () => {
-    const [comicsList, setComicsList] = useState([]);
-    const [newItemLoading, setnewItemLoading] = useState(false);
-    const [offset, setOffset] = useState(0);
-    const [comicsEnded, setComicsEnded] = useState(false);
+    const [comicsList, setComicsList] = useState<any[] | TransformComics[]>([]);
+    const [newItemLoading, setnewItemLoading] = useState<boolean>(false);
+    const [offset, setOffset] = useState<number>(0);
+    const [comicsEnded, setComicsEnded] = useState<boolean>(false);
 
-    const {getAllComics, process, setProcess} = useMarvelService();
+    const {getAllComics, process, setProcess} = useMarvelServiceTS();
 
     useEffect(() => {
         onRequest(offset, true);
     }, [])
 
-    const onRequest = (offset, initial) => {
+    const onRequest = (offset: number, initial?: boolean) => {
         initial ? setnewItemLoading(false) : setnewItemLoading(true);
         getAllComics(offset)
             .then(onComicsListLoaded)
             .then(() => setProcess('confirmed'))
     }
 
-    const onComicsListLoaded = (newComicsList) => {
+    const onComicsListLoaded = (newComicsList: TransformComics[]) => {
         let ended = false;
         if (newComicsList.length < 8) {
             ended = true;
@@ -54,8 +54,8 @@ const ComicsList = () => {
         setComicsEnded(ended);
     }
 
-    function renderItems (arr) {
-        const items = arr.map((item, i) => {
+    function renderItems (arr: TransformComics[]) {
+        const items = arr.map((item: TransformComics, i: number) => {
             return (
                 <li className="comics__item" key={i}>
                     <Link to={`/comics/${item.id}`}>
