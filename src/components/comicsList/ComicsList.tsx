@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
@@ -7,9 +7,18 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../error/ErrorMessage';
 
 import './comicsList.scss';
-import { TransformComics } from '../interfaces/interface';
 
-const setContent = (process: string, Component:React.FC, newItemLoading: boolean) => {
+interface ComicsListDataTypes { 
+    description: string
+    id: number
+    language: string
+    pageCount: string
+    price: string | number
+    thumbnail: string
+    title: string
+}
+
+const setContent = (process: string, Component: FC, newItemLoading: boolean) => {
     switch(process) {
         case 'waiting': 
             return <Spinner/>; 
@@ -25,7 +34,7 @@ const setContent = (process: string, Component:React.FC, newItemLoading: boolean
 }
 
 const ComicsList = () => {
-    const [comicsList, setComicsList] = useState<any[] | TransformComics[]>([]);
+    const [comicsList, setComicsList] = useState<ComicsListDataTypes[]>([]);
     const [newItemLoading, setnewItemLoading] = useState<boolean>(false);
     const [offset, setOffset] = useState<number>(0);
     const [comicsEnded, setComicsEnded] = useState<boolean>(false);
@@ -43,7 +52,7 @@ const ComicsList = () => {
             .then(() => setProcess('confirmed'))
     }
 
-    const onComicsListLoaded = (newComicsList: TransformComics[]) => {
+    const onComicsListLoaded = (newComicsList: ComicsListDataTypes[]) => {
         let ended = false;
         if (newComicsList.length < 8) {
             ended = true;
@@ -54,8 +63,8 @@ const ComicsList = () => {
         setComicsEnded(ended);
     }
 
-    function renderItems (arr: TransformComics[]) {
-        const items = arr.map((item: TransformComics, i: number) => {
+    function renderItems (arr: ComicsListDataTypes[]) {
+        const items = arr.map((item: ComicsListDataTypes, i: number) => {
             return (
                 <li className="comics__item" key={i}>
                     <Link to={`/comics/${item.id}`}>

@@ -376,6 +376,14 @@ module.exports = function (webpackEnv) {
               },
             },
             {
+              test: /\.css$/i,
+              use: ['style-loader', 'css-loader'],
+            },
+            { // Для импорта картинок в TypeScript
+              test: /\.(png|svg|jpg|jpeg|gif)$/i,
+              type: 'asset/resource',
+            },
+            {
               test: /\.svg$/,
               use: [
                 {

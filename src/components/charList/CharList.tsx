@@ -1,16 +1,28 @@
 import React, {ReactNode, FC, useState, useEffect, useRef, useMemo, CSSProperties} from 'react'; // FC (не рекомендуется юзать)
-import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import useMarvelServiceTS from '../services/MarvelService';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../error/ErrorMessage';
+import Spinner from '../spinner/Spinner.tsx';
+import ErrorMessage from '../error/ErrorMessage.tsx';
 
 import useUsersStore from '../../state_managment/zustand'; // импортируем store
 
 import './charList.scss';
-import { IResponse } from '../interfaces/interface';
-import { TransformChar } from '../interfaces/interface';
+
+interface Comics {
+    resourceURI?: string
+    name?: string
+}
+
+interface CharListDataTypes {
+    comics: Comics[]
+    description: string
+    homepage: string
+    id?: number | string
+    name: string
+    thumbnail: string
+    wiki: string
+}
 
 const setContent = (process: string, Component: FC, newItemLoading: boolean) => {
     switch(process) {
@@ -32,7 +44,7 @@ type TypeCharListProps = { // добавляем типизацию для пр�
 }
 
 const CharList = (props: TypeCharListProps) => {
-    const [charList, setCharList] = useState<any[] | IResponse[]>([]);
+    const [charList, setCharList] = useState<CharListDataTypes[]>([]);
     const [newItemLoading, setNewItemLoading] = useState<boolean>(false);
     const [offset, setOffset] = useState<number>(205);
     const [charEnded, setCharEnded] = useState<boolean>(false);
@@ -50,7 +62,7 @@ const CharList = (props: TypeCharListProps) => {
             .then(() => setProcess('confirmed'))
     }
 
-    const onCharListLoaded = (newCharList: IResponse[]) => {
+    const onCharListLoaded = (newCharList: CharListDataTypes[]) => {
         let ended = false;
         if (newCharList.length < 9) {
             ended = true;
@@ -66,7 +78,11 @@ const CharList = (props: TypeCharListProps) => {
         current: HTMLLIElement[]
     }
 
-    const itemRefs:IRefs | null[] = useRef([]);
+    interface IRefsObj {
+        current: IRefs
+    }
+
+    const itemRefs:IRefs | IRefsObj = useRef([]);
 
     // Типизация рефов
     const focusOnItem = (id: number) => {
@@ -75,8 +91,8 @@ const CharList = (props: TypeCharListProps) => {
         itemRefs.current[id].focus();
     }
 
-    function renderItems(arr: IResponse[]) {
-        const items =  arr.map((item: IResponse, i: number) => {
+    function renderItems(arr: CharListDataTypes[]) {
+        const items =  arr.map((item: CharListDataTypes, i: number) => {
             let imgStyle:CSSProperties = {'objectFit' : 'cover'};
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
                 imgStyle = {'objectFit' : 'unset'};

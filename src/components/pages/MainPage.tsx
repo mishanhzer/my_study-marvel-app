@@ -11,9 +11,9 @@ import CharForm from "../charForm/CharForm";
 import decoration from '../../resources/img/vision.png'; 
 
 const MainPage = () => { 
-    const [selectedChar, setChar] = useState<null | number>(null); 
+    const [selectedChar, setChar] = useState<number | string>(); 
 
-    const onCharSelected = (id: null | number) => {
+    const onCharSelected = (id?: number | string) => {
        setChar(id);
     }
 

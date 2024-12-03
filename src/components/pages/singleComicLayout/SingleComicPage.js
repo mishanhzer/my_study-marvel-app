@@ -4,6 +4,7 @@ import {Helmet} from "react-helmet";
 import './singleComicPage.scss';
 
 const SingleComicPage = ({data}) => { 
+    console.log(data)
     const {title, description, pageCount, thumbnail, language, price} = data;
 
     return (

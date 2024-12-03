@@ -13,7 +13,7 @@ const useHttp = () => {
         }
 
         const data = await res.json();
-   
+
         return data;
         } catch(e) {
             setProcess('error'); 

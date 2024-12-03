@@ -1,11 +1,9 @@
-import { string } from "prop-types";
 import { useState, useCallback } from "react";
-
 
 const useHttp = () => {
     const [process, setProcess] = useState('waiting'); 
 
-    const request = useCallback(async (url: string, method:string = 'GET', body = null, headers = {'Content-Type': 'application/json'}) => {
+    const request = useCallback(async (url: string, method: string = 'GET', body = null, headers = {'Content-Type': 'application/json'}) => {
         setProcess('loading'); 
         try {
         const res = await fetch(url, {method, body, headers});

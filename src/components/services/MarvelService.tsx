@@ -1,6 +1,64 @@
 import useHttp from "../../hooks/http.hook";
-import { Char } from "../interfaces/interface";
-import { Comics } from "../interfaces/interface";
+
+// Char
+interface GeneralObjWithResource {
+    resourceURI?: string
+    name?: string
+}
+
+interface GeneralObj {
+    available: number
+    collectionURI: string
+    items: GeneralObjWithResource[]
+    returned: number
+}
+
+interface Thumbnail {
+    extension: string
+    path: string
+}
+
+interface Urls {
+    type: string
+    url: string
+}
+
+interface Char { // интерфейс для типизации данных еще на входе в MarvelService до трансформации данных
+    comics: GeneralObj
+    description: string
+    events: GeneralObj
+    id?: number | string
+    modified: string
+    name: string
+    resourceURI: string
+    series: GeneralObj
+    stories: GeneralObj
+    thumbnail: Thumbnail
+    urls: Urls[]
+}
+
+// Comics
+interface Prices {
+    type: string
+    price: number
+}
+
+interface TextObject {
+    type: string
+    language: string
+    text: string
+}
+
+interface Comics { // интерфейс для типизации данных еще на входе в MarvelService до трансформации данных
+    id: number 
+    title: string
+    description: string
+    pageCount: string
+    thumbnail: Thumbnail 
+    prices: Prices[] 
+    textObjects: TextObject 
+    language: string
+}
 
 const useMarvelServiceTS = () => {
 	const {request, clearError, process, setProcess} = useHttp(); // пробрасываем process и setProcess
@@ -37,7 +95,6 @@ const useMarvelServiceTS = () => {
 		const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
 		return _transformComics(res.data.results[0]);
 	};
-
 
 	const _transformCharacter = (char: Char) => {
 		return {

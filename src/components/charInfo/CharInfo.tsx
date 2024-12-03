@@ -5,15 +5,28 @@ import useMarvelServiceTS from '../services/MarvelService';
 import setContent from '../../utils/setContent'; 
 
 import './charInfo.scss';
-import { IResponse } from '../interfaces/interface';
 
 interface ICharInfoProps {
-    charId?: number | null | string
+    charId?: number | string
 }
 
+interface Comics {
+    resourceURI?: string
+    name?: string
+}
+
+interface CharInfoDataTypes {
+    comics: Comics[]
+    description: string
+    homepage: string
+    id?: number | string
+    name: string
+    thumbnail: string
+    wiki: string
+}
 
 const CharInfo = (props: ICharInfoProps) => {
-    const [char, setChar] = useState<IResponse | null>();
+    const [char, setChar] = useState<CharInfoDataTypes>();
     const {getCharacter, clearError, process, setProcess} = useMarvelServiceTS(); 
 
     useEffect(() => {
@@ -32,18 +45,19 @@ const CharInfo = (props: ICharInfoProps) => {
             .then(() => setProcess('confirmed'))
     }
 
-    const onCharLoaded = (char: IResponse) => {
+    const onCharLoaded = (char: CharInfoDataTypes) => {
         setChar(char);
     }
 
     return (
         <div className="char__info">
-            {setContent(process, View, char)} 
+            {setContent<CharInfoDataTypes>(process, View, char)} 
         </div>
     )
 }
 
-const View = ({data}: any) => { 
+const View = ({...data}: CharInfoDataTypes) => {  // Чтобы избежать бага несостыковки типизаций, нужно было в этом компоненте типизировать каждое свойство по отдельности (или расширить с помощью спред оператора - типизировали то, что придет вовнутрь свойства data)
+
     const {name, description, thumbnail, homepage, wiki, comics} = data;
 
     let imgStyle:CSSProperties = {'objectFit' : 'cover'};
@@ -74,7 +88,7 @@ const View = ({data}: any) => {
             <ul className="char__comics-list">
                 {comics.length > 0 ? null : 'There is no comics with this character'}
                 {
-                    comics.map((item, i) => {
+                    comics.map((item: Comics, i: number) => {
                         if (i > 9) return;
                         return (
                             <li key={i} className="char__comics-item">

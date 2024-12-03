@@ -2,6 +2,7 @@ import {Helmet} from "react-helmet";
 import './singleCharPage.scss';
 
 const SingleCharPage = ({data}) => { 
+    console.log(data)
     const {name, description, thumbnail} = data;
     
     return (

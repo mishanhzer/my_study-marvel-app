@@ -2,9 +2,17 @@ import React from "react";
 import {Helmet} from "react-helmet";
 import './singleCharPage.scss';
 
-import { CharPage } from "../../interfaces/interface";
+interface TypeForSinglePages  {
+    description: string
+    language?: string
+    pageCount?: string
+    price?: string
+    thumbnail: string
+    title?: string
+    name?: string
+}
 
-const SingleCharPage = ({data}: CharPage) => { 
+const SingleCharPage = ({...data}: TypeForSinglePages ) => { 
     const {name, description, thumbnail} = data;
     
     return (

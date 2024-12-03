@@ -3,9 +3,18 @@ import { Link } from 'react-router-dom';
 import {Helmet} from "react-helmet";
 
 import './singleComicPage.scss';
-import { ComicPage } from '../../interfaces/interface';
 
-const SingleComicPage = ({data}: ComicPage) => { 
+interface TypeForSinglePages  {
+    description: string
+    language?: string
+    pageCount?: string
+    price?: string
+    thumbnail: string
+    title?: string
+    name?: string
+}
+
+const SingleComicPage = ({...data}: TypeForSinglePages ) => { 
     const {title, description, pageCount, thumbnail, language, price} = data;
 
     return (

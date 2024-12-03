@@ -3,16 +3,12 @@ import { Component, useEffect, useState } from "react";
 
 import ErrorMessage from "../error/ErrorMessage"; 
 
-interface IError {
-    children: React.FC | string
-}
-
-interface test {
+interface IStateError {
     error: boolean
 }
 
 class ErrorBoundary extends Component<{children: React.ReactNode}> { 
-    state:test = { 
+    state:IStateError = { 
         error: false
     }
 

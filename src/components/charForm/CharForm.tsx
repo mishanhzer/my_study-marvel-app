@@ -8,9 +8,23 @@ import useMarvelServiceTS from '../services/MarvelService';
 import ErrorMessage from '../error/ErrorMessage';
 
 import './charForm.scss';
-import { IResponse } from '../interfaces/interface';
 
-const setContent = (process: string, char: IResponse[]) => {
+interface Comics {
+    resourceURI?: string
+    name?: string
+}
+
+interface CharFormDataTypes {
+    comics: Comics[]
+    description: string
+    homepage: string
+    id?: number | string
+    name: string
+    thumbnail: string
+    wiki: string
+}
+
+const setContent = (process: string, char: CharFormDataTypes[]) => {
     switch(process) {
         case 'waiting':
             return false; 
@@ -39,10 +53,10 @@ const setContent = (process: string, char: IResponse[]) => {
 }
 
 const CharForm = () => {
-    const [char, setChar] = useState<IResponse[]>([]); 
+    const [char, setChar] = useState<CharFormDataTypes[]>([]); 
     const {getCharacterByName, clearError, process, setProcess} = useMarvelServiceTS(); 
 
-    const onCharLoaded = (char: IResponse[])  => {
+    const onCharLoaded = (char: CharFormDataTypes[])  => {
         setChar(char);
     }
 
