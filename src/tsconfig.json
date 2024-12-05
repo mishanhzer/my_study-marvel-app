@@ -1,0 +1,71 @@
+{
+  "compilerOptions": {
+    "target": "es2021", // Версия ecmascript - может поставить 'es2021' /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "jsx": "react-jsx",                                /* Specify what JSX code is generated. */
+    "experimentalDecorators": true, // использование декораторов  /* Enable experimental support for legacy experimental decorators. */
+    "module": "ESNext",  // commonjs использует импорты require(''), ES6, ESNext использует import   /* Specify what module code is generated. */
+    "rootDir": "./src",  // папка, где будут лежать тс файлы   /* Specify the root folder within your source files. */
+    "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
+    "resolveJsonModule": true, // если будет баг, то убрать                 // Позволяет импортировать файлы JSON как модули.
+    "allowJs": true,  // разрешение компиляции js файлов   /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
+    "declaration": true,                               // Создает соответствующий .d.ts файл
+    "sourceMap": true, // для деббагинга кода (рек: true)                          
+    "noEmit": true,                                   /* Disable emitting files from a compilation. */
+    "outDir": "./build", // Папка, куда будет компилироваться   /* Specify an output folder for all emitted files. */
+    "isolatedModules": true,                          /* Ensure that each file can be safely transpiled without relying on other imports. */
+    "allowSyntheticDefaultImports": true,             /* Allow 'import x from y' when a module doesn't have a default export. */
+    "esModuleInterop": true,                             // Обеспечивает совместимость с модулями CommonJS, позволяя импортировать по умолчанию модули без экспорта по умолчанию.
+    "forceConsistentCasingInFileNames": true,            // Гарантирует, что имена файлов обрабатываются с использованием единого регистра, что важно для кроссплатформенной совместимости.
+    "strict": true, // строгая проверка на типы (рек: true)   /* Enable all strict type-checking options. */
+    "strictNullChecks": true,    // если будет баг, то убрать   // Гарантирует, что null и undefined рассматриваются как отдельные типы, что делает код более предсказуемым, предотвращая случайные операции с null или undefined значениями.                                           /* Ensure 'use strict' is always emitted. */
+    "noUnusedLocals": false,     // если будет баг, то убрать                        /* Enable error reporting when local variables aren't read. */
+    "noUnusedParameters": false, // если будет баг, то убрать                        /* Raise an error when a function parameter isn't read. */
+    "noFallthroughCasesInSwitch": true,               /* Enable error reporting for fallthrough cases in switch statements. */
+    "noUncheckedIndexedAccess": true, // если будет баг, то убрать                /* Add 'undefined' to a type when accessed using an index. */
+    "allowUnreachableCode": false, // убрать, если будет баг    // Установите allowUnreachableCode на false, чтобы предотвратить проникновение недостижимого кода в производство, обеспечивая более чистые и продуманные пути кода.
+    "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
+    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "noErrorTruncation": true,                          // Если эта опция включена, TypeScript не будет обрезать сообщения об ошибках, предоставляя полную информацию об ошибке.
+  },
+  "files": [
+    "tsconfig.json"
+  ],
+  "include": ["src/**/*.ts"],
+// "include": [
+//     "src"
+// ],
+  "exclude": []
+}
+
+
+
+
+// {
+//     "files": ["index.tsx"],
+//     "compilerOptions": {
+//       "target": "es2015",
+//       "module": "es2015",
+//       "declaration": true,
+//       "outDir": "./dist",
+//       "noEmit": false,
+//       "strict": true,
+//       "noImplicitAny": true,
+//       "strictNullChecks": true,
+//       "strictFunctionTypes": true,
+//       "strictBindCallApply": true,
+//       "strictPropertyInitialization": true,
+//       "noImplicitThis": true,
+//       "alwaysStrict": true,
+//       "noUnusedLocals": true,
+//       "noUnusedParameters": true,
+//       "noImplicitReturns": true,
+//       "noFallthroughCasesInSwitch": true,
+//       "noUncheckedIndexedAccess": true,
+//       "noImplicitOverride": true,
+//       "noPropertyAccessFromIndexSignature": true,
+//       "esModuleInterop": true,
+//       "forceConsistentCasingInFileNames": true,
+//       "skipLibCheck": true
+//     }
+// }

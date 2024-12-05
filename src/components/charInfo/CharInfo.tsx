@@ -1,8 +1,12 @@
-import React, { CSSProperties } from 'react';
+import React, { FC, CSSProperties } from 'react';
 import { useState, useEffect } from 'react';
 
+import Skeleton from '../skeleton/Skeleton';
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../error/ErrorMessage';
+
 import useMarvelServiceTS from '../services/MarvelService';
-import setContent from '../../utils/setContent'; 
+// import setContent from '../../utils/setContent'; 
 
 import './charInfo.scss';
 
@@ -11,22 +15,39 @@ interface ICharInfoProps {
 }
 
 interface Comics {
-    resourceURI?: string
-    name?: string
+    resourceURI: string
+    name: string
 }
 
 interface CharInfoDataTypes {
     comics: Comics[]
-    description: string
-    homepage: string
+    description?: string
+    homepage?: string
     id?: number | string
-    name: string
-    thumbnail: string
-    wiki: string
+    name?: string
+    thumbnail?: string
+    wiki?: string
+} 
+
+function setContent(process: string, Component: FC<CharInfoDataTypes>, data: CharInfoDataTypes) {
+    switch(process) {
+        case 'waiting':
+            return <Skeleton />;
+        case 'loading':
+            return <Spinner/>;
+        case 'confirmed': 
+            return <Component {...data} />; 
+        case 'error':
+            return <ErrorMessage />;
+        default:
+            throw new Error('Unexpected process state')
+    }
 }
 
+type Nullable<T> = T | null
+
 const CharInfo = (props: ICharInfoProps) => {
-    const [char, setChar] = useState<CharInfoDataTypes>();
+    const [char, setChar] = useState<CharInfoDataTypes | null>(null);
     const {getCharacter, clearError, process, setProcess} = useMarvelServiceTS(); 
 
     useEffect(() => {
@@ -45,18 +66,18 @@ const CharInfo = (props: ICharInfoProps) => {
             .then(() => setProcess('confirmed'))
     }
 
-    const onCharLoaded = (char: CharInfoDataTypes) => {
+    const onCharLoaded = (char: CharInfoDataTypes | null) => {
         setChar(char);
     }
 
     return (
         <div className="char__info">
-            {setContent<CharInfoDataTypes>(process, View, char)} 
+            {setContent(process, View, char)} 
         </div>
     )
 }
 
-const View = ({...data}: CharInfoDataTypes) => {  // Чтобы избежать бага несостыковки типизаций, нужно было в этом компоненте типизировать каждое свойство по отдельности (или расширить с помощью спред оператора - типизировали то, что придет вовнутрь свойства data)
+const View = ({...data}: CharInfoDataTypes | null) => {  // Чтобы избежать бага несостыковки типизаций, нужно было в этом компоненте типизировать каждое свойство по отдельности (или расширить с помощью спред оператора - типизировали то, что придет вовнутрь свойства data)
 
     const {name, description, thumbnail, homepage, wiki, comics} = data;
 

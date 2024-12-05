@@ -1,4 +1,6 @@
 import React from 'react';
+
+import '../../custom'
 import img from './error.gif';
 
 const ErrorMessage = () => {

@@ -2,8 +2,8 @@ import useHttp from "../../hooks/http.hook";
 
 // Char
 interface GeneralObjWithResource {
-    resourceURI?: string
-    name?: string
+    resourceURI: string
+    name: string
 }
 
 interface GeneralObj {

@@ -1,16 +1,31 @@
-import React from "react";
+import React, {FC} from "react";
 import Skeleton from "../components/skeleton/Skeleton";
 import Spinner from "../components/spinner/Spinner";
 import ErrorMessage from "../components/error/ErrorMessage";
 
-function setContent<T>(process: string, Component:React.FC<T>, data:T | undefined) {
+interface Comics {
+    resourceURI?: string
+    name?: string
+}
+
+interface CharInfoDataTypes {
+    comics: Comics[]
+    description?: string
+    homepage?: string
+    id?: number | string
+    name?: string
+    thumbnail?: string
+    wiki?: string
+}
+
+function setContent<T>(process: string, Component: FC<T>, data: T) {
     switch(process) {
         case 'waiting':
             return <Skeleton />;
         case 'loading':
             return <Spinner/>;
         case 'confirmed': 
-            return <Component data={data} />; // зачем типизировать пропсы в React.FC если эти пропсы data?
+            return <Component {...data} />; 
         case 'error':
             return <ErrorMessage />;
         default:

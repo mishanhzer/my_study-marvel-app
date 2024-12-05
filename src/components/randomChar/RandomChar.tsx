@@ -7,6 +7,8 @@ import useMarvelServiceTS from '../services/MarvelService';
 import setContent from '../../utils/setContent';
 
 import './randomChar.scss';
+
+import '../../custom'
 import mjolnir from '../../resources/img/mjolnir.png';
 
 interface Comics {
@@ -16,12 +18,12 @@ interface Comics {
 
 interface RandomCharDataTypes {
     comics: Comics[]
-    description: string
-    homepage: string
+    description?: string
+    homepage?: string
     id?: number | string
-    name: string
-    thumbnail: string
-    wiki: string
+    name?: string
+    thumbnail?: string
+    wiki?: string
 }
 
 // Переделываем компонент под принцип FSM аналогично другим
@@ -53,7 +55,7 @@ const RandomChar = () => {
 
     return (
         <div className="randomchar">
-            {setContent<RandomCharDataTypes>(process, View, char)} 
+            {setContent(process, View, char)} 
             <div className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>
