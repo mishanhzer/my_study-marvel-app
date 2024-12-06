@@ -7,7 +7,7 @@ import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 const Page404 = () => {
     const navigate = useNavigate(); 
     
-    const navigateCall = useCallback(() => {
+    const navigateCall = useCallback(() => { // оборачиваем в callBack, чтобы убрать колбек в обработчике (() => navigate(-1))
         navigate(-1)
     }, [])
     

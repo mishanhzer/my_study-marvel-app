@@ -1,11 +1,8 @@
-// Чтобы импортировать картинки в TS необходимо в папке src создать файл с расширением .d.ts и передать туда declare modile "*.jpg"
-
 import React from 'react';
 import './appBanner.scss';
 
 import avengers from '../../resources/img/Avengers.png'; 
 import avengersLogo from '../../resources/img/Avengers_logo.png';
-
 
 const AppBanner = () => {
     return (

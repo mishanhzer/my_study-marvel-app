@@ -72,14 +72,14 @@ const CharInfo = (props: ICharInfoProps) => {
 
     return (
         <div className="char__info">
+            {/* {char === null ? null : setContent(process, View, char)} */}
             {setContent(process, View, char)} 
         </div>
     )
 }
 
-const View = ({...data}: CharInfoDataTypes | null) => {  // Чтобы избежать бага несостыковки типизаций, нужно было в этом компоненте типизировать каждое свойство по отдельности (или расширить с помощью спред оператора - типизировали то, что придет вовнутрь свойства data)
-
-    const {name, description, thumbnail, homepage, wiki, comics} = data;
+const View = ({...data}: {data:CharInfoDataTypes}) => {
+    const {data: {name, description, thumbnail, homepage, wiki, comics}} = data;
 
     let imgStyle:CSSProperties = {'objectFit' : 'cover'};
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {

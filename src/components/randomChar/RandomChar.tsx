@@ -8,7 +8,6 @@ import setContent from '../../utils/setContent';
 
 import './randomChar.scss';
 
-import '../../custom'
 import mjolnir from '../../resources/img/mjolnir.png';
 
 interface Comics {

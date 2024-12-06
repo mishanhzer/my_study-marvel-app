@@ -1,11 +1,8 @@
-import React, {ReactNode, FC, useState, useEffect, useRef, useMemo, CSSProperties} from 'react'; // FC (не рекомендуется юзать)
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import React, {ReactNode, FC, useState, useEffect, useRef, useMemo, CSSProperties} from 'react';
 
 import useMarvelServiceTS from '../services/MarvelService';
 import Spinner from '../spinner/Spinner.tsx';
 import ErrorMessage from '../error/ErrorMessage.tsx';
-
-import useUsersStore from '../../state_managment/zustand'; // импортируем store
 
 import './charList.scss';
 
@@ -69,15 +66,17 @@ const CharList = (props: TypeCharListProps) => {
         }
 
         setCharList(charList => [...charList, ...newCharList]);
-        setNewItemLoading(newItemLoading => false);
+        setNewItemLoading(false);
         setOffset(offset => offset + 9);
-        setCharEnded(charEnded => ended);
+        setCharEnded(ended);
     }
 
+    // Создаем интерфейс на типизацию current
     interface IRefs {
         current: HTMLLIElement[]
     }
 
+    // Создаем интерфейс на типизацию current (дополнительно, чтобы типизировать, что еще может туда попсать обьект)
     interface IRefsObj {
         current: IRefs
     }

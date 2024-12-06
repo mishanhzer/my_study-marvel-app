@@ -8,7 +8,6 @@ import './charInfo.scss';
 
 const CharInfo = (props) => {
     const [char, setChar] = useState(null);
-    console.log(char)
     const {getCharacter, clearError, process, setProcess} = useMarvelService(); 
     
     useEffect(() => {
@@ -39,7 +38,8 @@ const CharInfo = (props) => {
 }
 
 const View = ({...data}) => { 
-    const {name, description, thumbnail, homepage, wiki, comics} = data;
+    const {data: {name, description, thumbnail, homepage, wiki, comics}} = data;
+
     let imgStyle = {'objectFit' : 'cover'};
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
         imgStyle = {'objectFit' : 'contain'};

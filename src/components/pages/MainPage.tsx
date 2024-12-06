@@ -8,7 +8,6 @@ import CharInfo from "../charInfo/CharInfo";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";  
 import CharForm from "../charForm/CharForm";
 
-import '../../custom'
 import decoration from '../../resources/img/vision.png'; 
 
 const MainPage = () => { 

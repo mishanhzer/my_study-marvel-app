@@ -1,10 +1,11 @@
-// !!! 1. Вопрос по решению тага SingleComicPage и SingleCharPage
-import React from "react";
+import React from "react"; // импортируем React - тчобы не было ошибки ("React" ссылается на глобальную переменную UMD, но текущий файл является модулем. Рекомендуется добавить импорт)
 import { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import AppHeader from "../appHeader/AppHeader";
 import Spinner from "../spinner/Spinner";
+
+import '../../custom' // импортируем custom.d.ts - чтобы не было ошибки при импорте картинок (Не удается найти модуль "./error.gif" или связанные с ним объявления типов)
 
 const Page404 = lazy(() => import('../pages/404.tsx')); 
 const MainPage = lazy(() => import('../pages/MainPage.tsx'));
