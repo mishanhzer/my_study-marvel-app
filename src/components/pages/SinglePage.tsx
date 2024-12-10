@@ -8,6 +8,8 @@ import Skeleton from '../skeleton/Skeleton.tsx';
 import Spinner from '../spinner/Spinner.tsx';
 import ErrorMessage from '../error/ErrorMessage.tsx';
 
+import { useStoreSinglePage } from '../store/store.ts';
+
 
 interface TypeForSinglePages {
     description: string
@@ -41,7 +43,8 @@ function setContent(process: string, Component: FC<TypeForSinglePages>, data: Ty
 
 const SinglePage = ({Component, dataType}: ForSinglePage) => {
     const {id} = useParams(); 
-    const [data, setData] = useState<TypeForSinglePages | null>(null); 
+    const data = useStoreSinglePage(state => state.data)
+    const setData = useStoreSinglePage(state => state.setData)
 
     const {getComic} = useMarvelServiceTS(); 
     const {getCharacter} = useMarvelServiceTS();
@@ -64,7 +67,7 @@ const SinglePage = ({Component, dataType}: ForSinglePage) => {
         }
     }
 
-    const onDataLoaded = (data: TypeForSinglePages | null) => {
+    const onDataLoaded = (data: TypeForSinglePages) => {
         setData(data);
     }
 

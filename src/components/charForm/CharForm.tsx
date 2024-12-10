@@ -7,11 +7,13 @@ import * as Yup from 'yup';
 import useMarvelServiceTS from '../services/MarvelService.ts';
 import ErrorMessage from '../error/ErrorMessage.tsx';
 
+import useStoreCharForm from '../store/store.ts';
+
 import './charForm.scss';
 
 interface Comics {
-    resourceURI?: string
-    name?: string
+    resourceURI: string
+    name: string
 }
 
 interface CharFormDataTypes {
@@ -53,7 +55,8 @@ const setContent = (process: string, char: CharFormDataTypes[]) => {
 }
 
 const CharForm = () => {
-    const [char, setChar] = useState<CharFormDataTypes[]>([]); 
+    const char = useStoreCharForm(state => state.char)
+    const setChar = useStoreCharForm(state => state.setChar)
     const {getCharacterByName, clearError, process, setProcess} = useMarvelServiceTS(); 
 
     const onCharLoaded = (char: CharFormDataTypes[])  => {

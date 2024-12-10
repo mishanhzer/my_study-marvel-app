@@ -6,6 +6,8 @@ import Skeleton from '../skeleton/Skeleton.tsx';
 import useMarvelServiceTS from '../services/MarvelService.ts';
 import setContent from '../../utils/setContent.tsx'; 
 
+import { useStoreCharInfo } from '../store/store.ts';
+
 import './charInfo.scss';
 
 interface ICharInfoProps {
@@ -28,7 +30,9 @@ interface CharInfoDataTypes {
 } 
 
 const CharInfo = (props: ICharInfoProps) => {
-    const [char, setChar] = useState<CharInfoDataTypes | null>(null);
+    const char = useStoreCharInfo(state => state.char)
+    const setChar = useStoreCharInfo(state => state.setChar)
+
     const {getCharacter, clearError, process, setProcess} = useMarvelServiceTS(); 
 
     useEffect(() => {
@@ -47,7 +51,7 @@ const CharInfo = (props: ICharInfoProps) => {
             .then(() => setProcess('confirmed'))
     }
 
-    const onCharLoaded = (char: CharInfoDataTypes | null) => {
+    const onCharLoaded = (char: CharInfoDataTypes) => {
         setChar(char);
     }
 
