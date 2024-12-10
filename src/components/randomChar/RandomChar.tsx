@@ -1,10 +1,8 @@
-// Такой же баг как и в CharInfo
 import React from 'react';
 import { useEffect, useState } from 'react';
-import useMarvelService from '../services/MarvelService';
-import useMarvelServiceTS from '../services/MarvelService';
+import useMarvelServiceTS from '../services/MarvelService.ts';
 
-import setContent from '../../utils/setContent';
+import setContent from '../../utils/setContent.tsx';
 
 import './randomChar.scss';
 
@@ -17,17 +15,16 @@ interface Comics {
 
 interface RandomCharDataTypes {
     comics: Comics[]
-    description?: string
-    homepage?: string
+    description: string
+    homepage: string
     id?: number | string
-    name?: string
-    thumbnail?: string
-    wiki?: string
+    name: string
+    thumbnail: string
+    wiki: string
 }
 
-// Переделываем компонент под принцип FSM аналогично другим
 const RandomChar = () => {
-    const [char, setChar] = useState<RandomCharDataTypes>();
+    const [char, setChar] = useState<RandomCharDataTypes | null>(null); 
     const {getCharacter, clearError, process, setProcess} = useMarvelServiceTS();
 
     useEffect(() => {
@@ -37,10 +34,9 @@ const RandomChar = () => {
         return () => { 
             clearInterval(timerId)
         }
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    }, [])
-
-    const onCharLoaded = (char: RandomCharDataTypes) => {
+    const onCharLoaded = (char: RandomCharDataTypes | null) => {
         setChar(char);
     }
 
@@ -54,7 +50,7 @@ const RandomChar = () => {
 
     return (
         <div className="randomchar">
-            {setContent(process, View, char)} 
+            {char === null ? null : setContent<RandomCharDataTypes>(process, View, char)} 
             <div className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>
@@ -72,7 +68,7 @@ const RandomChar = () => {
     )
 }
 
-const View = ({...data}: RandomCharDataTypes) => { 
+const View = ({data}: {data: RandomCharDataTypes}) => { 
     const {name, description, thumbnail, homepage, wiki} = data;
 
     const imgNotAvailable = 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg';
@@ -105,6 +101,8 @@ const View = ({...data}: RandomCharDataTypes) => {
 }
 
 export default RandomChar;
+
+
 
 
 

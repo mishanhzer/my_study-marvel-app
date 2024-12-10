@@ -1,11 +1,71 @@
-import useHttp from "../../hooks/http.hook";
-// const _apiKey = 'apikey=ef4b5738e027c92c944977fe97f44c1e';
-const useMarvelService = () => {
-	const {request, clearError, process, setProcess} = useHttp(); // пробрасываем process и setProcess
+import useHttp from "../../hooks/http.hook.ts";
 
-	const _apiBase = "https://gateway.marvel.com:443/v1/public/";
-	const _apiKey = 'apikey=ef4b5738e027c92c944977fe97f44c1e';
-	const _baseOffset = 205;
+// Char
+interface GeneralObjWithResource {
+    resourceURI: string
+    name: string
+}
+
+interface GeneralObj {
+    available: number
+    collectionURI: string
+    items: GeneralObjWithResource[]
+    returned: number
+}
+
+interface Thumbnail {
+    extension: string
+    path: string
+}
+
+interface Urls {
+    type: string
+    url: string
+}
+
+interface Char { 
+    comics: GeneralObj
+    description: string
+    events: GeneralObj
+    id?: number | string
+    modified: string
+    name: string
+    resourceURI: string
+    series: GeneralObj
+    stories: GeneralObj
+    thumbnail: Thumbnail
+    urls: Urls[]
+}
+
+// Comics
+interface Prices {
+    type: string
+    price: number
+}
+
+interface TextObject {
+    type: string
+    language: string
+    text: string
+}
+
+interface Comics {
+    id: number 
+    title: string
+    description: string
+    pageCount: string
+    thumbnail: Thumbnail 
+    prices: Prices[] 
+    textObjects: TextObject 
+    language: string
+}
+
+const useMarvelServiceTS = () => {
+	const {request, clearError, process, setProcess} = useHttp(); 
+
+	const _apiBase: string = "https://gateway.marvel.com:443/v1/public/";
+	const _apiKey: string = 'apikey=ef4b5738e027c92c944977fe97f44c1e';
+	const _baseOffset: number = 205;
 
 	const getAllCharacters = async (offset = _baseOffset) => {
 		const res = await request(
@@ -14,14 +74,12 @@ const useMarvelService = () => {
 		return res.data.results.map(_transformCharacter);
 	};
 
-	const getCharacter = async (id) => {
+	const getCharacter = async (id?: number | string)  => {
 		const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
 		return _transformCharacter(res.data.results[0]);
 	};
 
-    // Добавляем метод для поиска персонажа по имени
-    // PS: в url строке будет https://gateway.marvel.com:443/v1/public/characters?name=Captain%20America%2FSteve%20Rogers%20(MAA)&apikey=ef4b5738e027c92c944977fe97f44c1e - проценты с числом означают отдельный символ (%20 - это пробел и т.д)
-    const getCharacterByName = async (name) => {
+    const getCharacterByName = async (name: null | string) => {
 		const res = await request(`${_apiBase}characters?name=${name}&${_apiKey}`);
 		return res.data.results.map(_transformCharacter);
 	};
@@ -33,12 +91,12 @@ const useMarvelService = () => {
 		return res.data.results.map(_transformComics);
 	};
 
-	const getComic = async (id) => {
+	const getComic = async (id?: number | string) => {
 		const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
 		return _transformComics(res.data.results[0]);
 	};
 
-	const _transformCharacter = (char) => {
+	const _transformCharacter = (char: Char) => {
 		return {
 			id: char.id,
 			name: char.name,
@@ -52,7 +110,7 @@ const useMarvelService = () => {
 		};
 	};
 
-	const _transformComics = (comics) => {
+	const _transformComics = (comics: Comics) => {
 		return {
 			id: comics.id,
 			title: comics.title,
@@ -70,8 +128,8 @@ const useMarvelService = () => {
 
 	return {
 		clearError,
-        process, // возвращаем process
-        setProcess, // возвращаем функцию установления FSM стейта
+        process, 
+        setProcess, 
 		getAllCharacters,
 		getCharacter,
         getCharacterByName,
@@ -80,4 +138,4 @@ const useMarvelService = () => {
 	};
 };
 
-export default useMarvelService;
+export default useMarvelServiceTS;

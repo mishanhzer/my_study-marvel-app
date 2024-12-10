@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../custom' 
+import '../../custom.d.ts' 
 import img from './error.gif';
 
 const ErrorMessage = () => {

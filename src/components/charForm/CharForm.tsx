@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage as FormikErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
-import useMarvelServiceTS from '../services/MarvelService';
-import ErrorMessage from '../error/ErrorMessage';
+import useMarvelServiceTS from '../services/MarvelService.ts';
+import ErrorMessage from '../error/ErrorMessage.tsx';
 
 import './charForm.scss';
 

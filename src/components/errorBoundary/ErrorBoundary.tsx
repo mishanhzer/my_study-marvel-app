@@ -1,7 +1,7 @@
 import React, { ErrorInfo } from "react";
 import { Component} from "react";
 
-import ErrorMessage from "../error/ErrorMessage"; 
+import ErrorMessage from "../error/ErrorMessage.tsx"; 
 
 interface IStateError {
     error: boolean
@@ -12,7 +12,7 @@ class ErrorBoundary extends Component<{children: React.ReactNode}> {
         error: false
     }
 
-    componentDidCatch(error: unknown, errorInfo: unknown) { // или тип Error и ErrorInfo
+    componentDidCatch(error: unknown, errorInfo: unknown) { 
         console.log(error)
         console.log(errorInfo)
         this.setState({ 

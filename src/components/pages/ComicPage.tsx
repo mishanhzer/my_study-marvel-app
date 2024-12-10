@@ -1,9 +1,8 @@
 import React from "react";
 import {Helmet} from "react-helmet";
-// Чтобы избежать бага 'Helmet' cannot be used as a JSX component' - нужно установить пакеты npm i @types/react-helmet
 
-import ComicsList from "../comicsList/ComicsList";
-import AppBanner from '../appBanner/AppBanner';
+import ComicsList from "../comicsList/ComicsList.tsx";
+import AppBanner from '../appBanner/AppBanner.tsx';
 import { Outlet, useOutlet } from "react-router-dom";
 
 const ComicsPage = () => {

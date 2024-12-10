@@ -3,6 +3,8 @@ declare module "*.png"
 declare module "*.gif"
 declare module "*.jpg"
 
+declare module 'react-dom/client'
+
 // declare module "*.png" {
 //     const value: any;
 //     export = value;

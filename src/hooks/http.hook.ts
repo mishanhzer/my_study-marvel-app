@@ -22,10 +22,10 @@ const useHttp = () => {
     }, [])
 
     const clearError = useCallback(() => {
-        setProcess('loading'); // после очищения ошибки, устанавилваем стейт FSM в процесс загрузки
+        setProcess('loading'); 
     }, []);
      
-    return {request, clearError, process, setProcess} // возвращаем стейт FSM - process и установелния стейта FSM - setProcess
+    return {request, clearError, process, setProcess} 
 }
 
 export default useHttp;

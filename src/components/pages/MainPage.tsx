@@ -2,11 +2,11 @@ import React from "react";
 import { useState } from "react"; 
 import {Helmet} from "react-helmet"; // импортируем Helmet
 
-import RandomChar from "../randomChar/RandomChar";
-import CharList from "../charList/CharList";
-import CharInfo from "../charInfo/CharInfo";
-import ErrorBoundary from "../errorBoundary/ErrorBoundary";  
-import CharForm from "../charForm/CharForm";
+import RandomChar from "../randomChar/RandomChar.tsx";
+import CharList from "../charList/CharList.tsx";
+import CharInfo from "../charInfo/CharInfo.tsx";
+import ErrorBoundary from "../errorBoundary/ErrorBoundary.tsx";  
+import CharForm from "../charForm/CharForm.tsx";
 
 import decoration from '../../resources/img/vision.png'; 
 

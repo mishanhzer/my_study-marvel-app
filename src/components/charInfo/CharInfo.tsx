@@ -1,12 +1,8 @@
-import React, { FC, CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import { useState, useEffect } from 'react';
 
-import Skeleton from '../skeleton/Skeleton';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../error/ErrorMessage';
-
-import useMarvelServiceTS from '../services/MarvelService';
-// import setContent from '../../utils/setContent'; 
+import useMarvelServiceTS from '../services/MarvelService.ts';
+import setContent from '../../utils/setContent.tsx'; 
 
 import './charInfo.scss';
 
@@ -21,30 +17,13 @@ interface Comics {
 
 interface CharInfoDataTypes {
     comics: Comics[]
-    description?: string
-    homepage?: string
+    description: string
+    homepage: string
     id?: number | string
-    name?: string
-    thumbnail?: string
-    wiki?: string
+    name: string
+    thumbnail: string
+    wiki: string
 } 
-
-function setContent(process: string, Component: FC<CharInfoDataTypes>, data: CharInfoDataTypes) {
-    switch(process) {
-        case 'waiting':
-            return <Skeleton />;
-        case 'loading':
-            return <Spinner/>;
-        case 'confirmed': 
-            return <Component {...data} />; 
-        case 'error':
-            return <ErrorMessage />;
-        default:
-            throw new Error('Unexpected process state')
-    }
-}
-
-type Nullable<T> = T | null
 
 const CharInfo = (props: ICharInfoProps) => {
     const [char, setChar] = useState<CharInfoDataTypes | null>(null);
@@ -52,7 +31,7 @@ const CharInfo = (props: ICharInfoProps) => {
 
     useEffect(() => {
         updateChar()
-    }, [props.charId])
+    }, [props.charId]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const updateChar = () => {
         const {charId} = props;
@@ -72,14 +51,13 @@ const CharInfo = (props: ICharInfoProps) => {
 
     return (
         <div className="char__info">
-            {/* {char === null ? null : setContent(process, View, char)} */}
-            {setContent(process, View, char)} 
+            {char === null ? null : setContent<CharInfoDataTypes>(process, View, char)} {/* чтобы избежать баг с null или undefined, необходимо юзать условный рендеринг */}
         </div>
     )
 }
 
-const View = ({...data}: {data:CharInfoDataTypes}) => {
-    const {data: {name, description, thumbnail, homepage, wiki, comics}} = data;
+const View = ({data}: {data: CharInfoDataTypes}) => {
+    const {name, description, thumbnail, homepage, wiki, comics} = data;
 
     let imgStyle:CSSProperties = {'objectFit' : 'cover'};
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {

@@ -2,9 +2,9 @@ import React, {FC} from 'react';
 import {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-import useMarvelServiceTS from '../services/MarvelService';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../error/ErrorMessage';
+import useMarvelServiceTS from '../services/MarvelService.ts';
+import Spinner from '../spinner/Spinner.tsx';
+import ErrorMessage from '../error/ErrorMessage.tsx';
 
 import './comicsList.scss';
 
@@ -43,7 +43,7 @@ const ComicsList = () => {
 
     useEffect(() => {
         onRequest(offset, true);
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     const onRequest = (offset: number, initial?: boolean) => {
         initial ? setnewItemLoading(false) : setnewItemLoading(true);

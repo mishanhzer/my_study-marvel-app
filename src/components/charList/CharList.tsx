@@ -1,6 +1,6 @@
-import React, {ReactNode, FC, useState, useEffect, useRef, useMemo, CSSProperties} from 'react';
+import React, { FC, useState, useEffect, useRef, useMemo, CSSProperties } from 'react';
 
-import useMarvelServiceTS from '../services/MarvelService';
+import useMarvelServiceTS from '../services/MarvelService.ts';
 import Spinner from '../spinner/Spinner.tsx';
 import ErrorMessage from '../error/ErrorMessage.tsx';
 
@@ -36,7 +36,7 @@ const setContent = (process: string, Component: FC, newItemLoading: boolean) => 
     }
 }
 
-type TypeCharListProps = { // добавляем типизацию для пропсов CharList - пропсы это обьекты и типизируем их как обьекты
+type TypeCharListProps = { 
     onCharSelected: Function
 }
 
@@ -50,7 +50,7 @@ const CharList = (props: TypeCharListProps) => {
 
     useEffect(() => {
         onRequest(offset, true);
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     const onRequest = (offset: number, initial?: boolean) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true);
@@ -71,19 +71,16 @@ const CharList = (props: TypeCharListProps) => {
         setCharEnded(ended);
     }
 
-    // Создаем интерфейс на типизацию current
     interface IRefs {
         current: HTMLLIElement[]
     }
 
-    // Создаем интерфейс на типизацию current (дополнительно, чтобы типизировать, что еще может туда попсать обьект)
     interface IRefsObj {
         current: IRefs
     }
 
     const itemRefs:IRefs | IRefsObj = useRef([]);
 
-    // Типизация рефов
     const focusOnItem = (id: number) => {
         itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
         itemRefs.current[id].classList.add('char__item_selected');
@@ -128,7 +125,7 @@ const CharList = (props: TypeCharListProps) => {
 
     const elements = useMemo(() => {
         return setContent(process, () => renderItems(charList), newItemLoading)
-    }, [process]) 
+    }, [process]) // eslint-disable-line react-hooks/exhaustive-deps
     
     return (
         <div className="char__list">
