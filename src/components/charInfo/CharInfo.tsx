@@ -1,6 +1,8 @@
 import React, { CSSProperties } from 'react';
 import { useState, useEffect } from 'react';
 
+import Skeleton from '../skeleton/Skeleton.tsx';
+
 import useMarvelServiceTS from '../services/MarvelService.ts';
 import setContent from '../../utils/setContent.tsx'; 
 
@@ -51,7 +53,7 @@ const CharInfo = (props: ICharInfoProps) => {
 
     return (
         <div className="char__info">
-            {char === null ? null : setContent<CharInfoDataTypes>(process, View, char)} {/* чтобы избежать баг с null или undefined, необходимо юзать условный рендеринг */}
+            {char === null ? <Skeleton /> : setContent<CharInfoDataTypes>(process, View, char)} {/* чтобы избежать баг с null или undefined, необходимо юзать условный рендеринг */}
         </div>
     )
 }

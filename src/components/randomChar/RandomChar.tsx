@@ -7,6 +7,7 @@ import setContent from '../../utils/setContent.tsx';
 import './randomChar.scss';
 
 import mjolnir from '../../resources/img/mjolnir.png';
+import Spinner from '../spinner/Spinner.tsx';
 
 interface Comics {
     resourceURI?: string
@@ -50,7 +51,7 @@ const RandomChar = () => {
 
     return (
         <div className="randomchar">
-            {char === null ? null : setContent<RandomCharDataTypes>(process, View, char)} 
+            {char === null ? <Spinner /> : setContent<RandomCharDataTypes>(process, View, char)} 
             <div className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>

@@ -71,7 +71,7 @@ const SinglePage = ({Component, dataType}: ForSinglePage) => {
     return (
         <>
             <AppBanner/>
-            {data === null ? null : setContent(process, Component, data)}
+            {data === null ? <Spinner /> : setContent(process, Component, data)}
         </>
     )
 }
